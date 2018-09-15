@@ -1,0 +1,1 @@
+screen -S SharkyBot python3 SharkyBot.py

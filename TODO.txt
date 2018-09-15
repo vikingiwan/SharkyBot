@@ -1,0 +1,5 @@
+SharkBot TODO:
+
+*Clean up help command
+*Prune un-needed features
+*Adjust IDs and roles to match STE server
