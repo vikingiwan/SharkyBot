@@ -10,7 +10,7 @@ import sqlite3
 
 ##Variables & objects##
 global VERSION
-VERSION = '0.1ALPHA'
+VERSION = '1.0'
 botID = "490034484906033155"
 steServer = "196090010871660553"
 bot = commands.Bot(command_prefix="!")
@@ -23,7 +23,7 @@ global DEBUG
 DEBUG = True
 
 #Lists
-killResponses = ["%s 'accidentally' fell in a ditch... RIP >:)", "Oh, %s did that food taste strange? Maybe it was.....*poisoned* :wink:", "I didn't mean to shoot %s, I swear the gun was unloaded!", "*stabs %s* heh.... *stabs again*....hehe, stabby stabby >:D", "%s fell into the ocean whilst holding an anvil...well that was stupid.", "%s died from exposure to Staphylococcus Aureus. Wow that was really specific..."]
+killResponses = ["%s 'accidentally' fell in a ditch... RIP >:)", "Oh, %s did that food taste strange? Maybe it was.....*poisoned* :wink:", "I didn't mean to shoot %s, I swear the gun was unloaded!", "*stabs %s* heh.... *stabs again*....hehe, stabby stabby >:D", "%s fell into the ocean whilst holding an anvil...well that was stupid.", "%s died from exposure to Staphylococcus Aureus. Wow that was really specific...", "%s was running on a roof in the rain.....huh, I wonder what they were running from....oh well ¯\_(ツ)_/¯"]
 userCommands = ["test", "hug", "pat", "roll", "flip", "remind", "kill", "calc", "addquote", "quote","pfp", "info", "version", "changelog", "links", "link"]
 operatorCommands = ["say", "purge", "getBot", "update", "addLink", "addquote"]
 op_roles = ["265708944675176460"]
