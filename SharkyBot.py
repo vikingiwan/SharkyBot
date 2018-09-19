@@ -176,12 +176,21 @@ async def update(ctx):
         
 @bot.command(pass_context = True)
 async def addLink(ctx, name: str=None, *, link: str=None):
-    if isOp(ctx.message.author) == True:
+    if isScribe(ctx.message.author) == True:
         print("name: " + name)
         print("link: " + link)
         add_link(name, link)
         await bot.delete_message(ctx.message)
         await bot.say("Link Saved!")
+    else:
+        await bot.say("ERROR: UNAUTHORIZED!")
+        
+@bot.command(pass_context = True)
+async def terminate(ctx):
+    if isOp(ctx.message.author) == True:
+        await bot.say("Affirmative. Terminating now...")
+        await bot.change_presence(status=discord.Status.offline)
+        sys.exit()
     else:
         await bot.say("ERROR: UNAUTHORIZED!")
    

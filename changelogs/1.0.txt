@@ -1,1 +1,3 @@
 -Official Release, woo!
+-Added operator-only !terminate command
+-Gave Scribe rank the ability to add quotes and links
