@@ -17,7 +17,10 @@ steServer = "196090010871660553"
 bot = commands.Bot(command_prefix="!")
 connection = sqlite3.connect('STE-Data.db')
 cur = connection.cursor()
-updateChan = "381765126698565633"
+
+##Global Variables##
+global activeGiveaway
+activeGiveaway = False
 
 #Debug mode?
 global DEBUG
@@ -192,6 +195,44 @@ async def terminate(ctx):
         await bot.say("Affirmative. Terminating now...")
         await bot.change_presence(status=discord.Status.offline)
         sys.exit()
+    else:
+        await bot.say("ERROR: UNAUTHORIZED!")
+        
+@bot.command(pass_context = True)
+async def startGiveaway(ctx, *, msg: str=None):
+    if isOp(ctx.message.author) == True:
+        global activeGiveaway
+        if activeGiveaway == True:
+            await bot.say("ERROR: There is already a giveaway in progress!")
+        else:
+            if msg == None:
+                await bot.say("ERROR: You cannot start a giveaway with a blank message!")
+            else:
+                global giveawayEntries
+                giveawayEntries = []
+                await bot.delete_message(ctx.message)
+                await bot.send_message(bot.get_server(vtacServer).get_channel(mainChannel), "@everyone A giveaway is  starting!\n(Remember, you must be a full member to participate in giveaways)\n")
+                await asyncio.sleep(5)
+                msg = "\n" + msg + "\n\nUse !giveaway to enter the giveaway!"
+                em = discord.Embed(title='', description=msg, colour=0xFF0000)
+                em.set_author(name='Giveaway Info:', icon_url="https://i.imgur.com/0DCg8JB.png")
+                await bot.send_message(bot.get_server(vtacServer).get_channel(mainChannel), embed=em)
+                activeGiveaway = True
+    else:
+        await bot.say("ERROR: UNAUTHORIZED!")
+        
+@bot.command(pass_context = True)
+async def endGiveaway(ctx):
+    if isOp(ctx.message.author) == True:
+        global activeGiveaway
+        activeGiveaway = False
+        await bot.send_message(bot.get_server(vtacServer).get_channel(mainChannel), "@everyone The current giveaway is ending! I'm now deciding the winner...")
+        await asyncio.sleep(5)
+        await bot.send_message(bot.get_server(vtacServer).get_channel(mainChannel), "And the winner is...")
+        winner = random.choice(giveawayEntries)
+        await bot.send_typing(bot.get_server(vtacServer).get_channel(mainChannel))
+        await asyncio.sleep(10)
+        await bot.send_message(bot.get_server(vtacServer).get_channel(mainChannel), winner.mention + "! Congratulations! :clap:")    
     else:
         await bot.say("ERROR: UNAUTHORIZED!")
    
@@ -372,7 +413,24 @@ async def link(ctx, name: str=None):
         
 @bot.command(pass_context = True)
 async def links(ctx):
-    await bot.say(list_links())   
+    await bot.say(list_links())  
+
+
+@bot.command(pass_context = True)
+async def giveaway(ctx):
+    global activeGiveaway
+    if activeGiveaway == False:
+        await bot.say(ctx.message.author.mention + " There is no active giveaway!")
+    else:
+        global giveawayEntries
+        if ctx.message.author in giveawayEntries:
+            await bot.say(ctx.message.author.mention + " You're already entered into the giveaway. No cheating!")
+        else:
+            _entry = [ctx.message.author]
+            giveawayEntries = giveawayEntries + _entry
+            await bot.say(ctx.message.author.mention + " has entered into the giveaway!")
+
+    
     
 #Runtime, baby! Let's go!    
 print ('Getting ready...')

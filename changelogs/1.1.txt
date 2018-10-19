@@ -1,0 +1,2 @@
+-Cleaned up dead code
+-Added Giveaway System
