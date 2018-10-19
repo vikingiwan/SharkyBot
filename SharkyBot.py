@@ -11,7 +11,7 @@ import sqlite3
 
 ##Variables & objects##
 global VERSION
-VERSION = '1.0'
+VERSION = '1.1'
 botID = "490034484906033155"
 steServer = "196090010871660553"
 bot = commands.Bot(command_prefix="!")
